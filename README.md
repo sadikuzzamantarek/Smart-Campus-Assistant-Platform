@@ -10,7 +10,7 @@
 - [Platform Features](#-platform-features)
 - [Repository Structure](#-repository-structure)
 - [Team Directory](#-team-directory)
-- [Git Workflow: How to Contribute](#-git-workflow--how-to-contribute)
+- [Git Workflow — How to Contribute](#-git-workflow--how-to-contribute)
   - [Step 1: Fork this Repository](#step-1-fork-this-repository)
   - [Step 2: Clone your Fork](#step-2-clone-your-fork)
   - [Step 3: Create a Branch](#step-3-create-a-branch)
@@ -40,7 +40,7 @@
 
 Think of this platform as:
 
-> _"A one-stop digital campus — where students can check their schedule, read notices, ask an AI chatbot, get assignment reminders, and attend events — all from a single platform."_
+> _"A one-stop digital campus, where students can check their schedule, read notices, ask an AI chatbot, get assignment reminders, and attend events, all from a single platform."_
 
 **Hackathon Theme:** `Smart Campus Assistant Platform`
 
@@ -102,7 +102,7 @@ Smart-Campus-Assistant-Platform/
 
 ---
 
-## 🔧 Git Workflow: How to Contribute
+## 🔧 Git Workflow — How to Contribute
 
 Every team member must follow this workflow. This ensures **no one overwrites anyone else's work** and all code is reviewed before merging.
 
