@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import checkingRouter from "./routes/checking.js";
 import connectDB from "./config/db.js";
+import asignment_router from "./routes/assignments.js";
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,8 @@ connectDB()
 
 //routes
 app.use("/api", checkingRouter); //this is for checking only
+app.use("/api", asignment_router); //this is for checking only
+
 
 app.get("/", (req, res) => {
   res.send("Server running");
