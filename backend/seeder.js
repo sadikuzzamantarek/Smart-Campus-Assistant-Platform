@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
+import { fileURLToPath } from "url";
 // Load environment variables
 dotenv.config();
 import Assignment from "./src/models/assignment_model.js";
@@ -91,7 +91,7 @@ const randomAssignmentNo = () => Math.floor(Math.random() * 20) + 1; // 1-20
 
 // Helper function to generate random status
 const randomStatus = () => {
-  const statuses = ["pending", "submitted", "graded", "overdue", "draft"];
+  const statuses = ["pending", "submitted", "graded", "late"];
   const weights = [0.4, 0.2, 0.15, 0.15, 0.1]; // 40% pending, 20% submitted, etc.
   const random = Math.random();
   let cumulative = 0;
@@ -141,10 +141,12 @@ const generateAssignments = (count = 50) => {
 
 // Seeder function
 const seedDatabase = async () => {
+  console.log("sadik");
+
   try {
     // Connect to MongoDB
     const mongoURI =
-      process.env.MONGODB_URI || "mongodb://localhost:27017/your_database_name";
+      process.env.MONGODB_URI || "mongodb://localhost:27017/smart_campus";
     await mongoose.connect(mongoURI);
     console.log("Connected to MongoDB");
 
@@ -182,9 +184,10 @@ const seedDatabase = async () => {
 };
 
 // Run the seeder if this file is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run the seeder when this file is executed directly
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  console.log("Starting seeder...");
   seedDatabase();
 }
-
 // Export for use in other scripts
 export { generateAssignments, seedDatabase };
