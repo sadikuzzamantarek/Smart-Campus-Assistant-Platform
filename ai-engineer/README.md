@@ -1,64 +1,168 @@
-## Overview
 
 # 🤖 AI Engineer Team
 
+## 📌 Overview
 
 **Working Folder:** `/ai-engineer/`
 
-**Role:** Build the AI-powered chatbot assistant and intelligent features for the platform.
+### 🎯 Role
 
-#### Responsibilities
+The AI Engineer Team is responsible for developing an intelligent chatbot assistant for the Smart Campus platform. The chatbot leverages **LangChain**, **OpenAI API**, and **Retrieval-Augmented Generation (RAG)** to answer student queries using institutional documents and knowledge bases.
 
-- Build a conversational AI chatbot using LangChain and OpenAI API
-- Create a FastAPI backend to expose chatbot as REST endpoints
-- Answer student FAQs, course information, deadlines, teacher contacts, event suggestions
-- Optionally implement RAG (Retrieval-Augmented Generation) for document-based answers
+---
 
-#### Tech Stack
+# 🚀 Features
 
-| Category             | Tool            |
-| -------------------- | --------------- |
-| Language             | Python          |
-| API Framework        | FastAPI / Flask |
-| AI API               | OpenAI API      |
-| AI Framework         | LangChain       |
-| Vector DB (Optional) | ChromaDB        |
-| Testing              | Postman         |
-| IDE                  | VS Code         |
-| Version Control      | Git & GitHub    |
+- 🤖 AI-powered conversational chatbot
+- 📚 RAG (Retrieval-Augmented Generation) pipeline
+- 📄 PDF document ingestion
+- 🔍 Semantic search using vector embeddings
+- ⚡ FastAPI REST API
+- 🗂️ ChromaDB vector database
+- 🔗 Easy backend integration
 
-#### Folder Structure (suggested)
+---
 
-```
+# 🛠 Tech Stack
+
+| Category | Technology |
+|-----------|------------|
+| Language | Python |
+| Backend Framework | FastAPI |
+| AI Framework | LangChain |
+| LLM | OpenAI API |
+| Vector Database | ChromaDB |
+| Embedding Model | OpenAI Embeddings |
+| Document Loader | PDF Loader |
+| Testing | Postman |
+| IDE | VS Code |
+| Version Control | Git & GitHub |
+
+---
+
+# 📁 Project Structure
+
+```text
 ai-engineer/
-├── app/
-│   ├── main.py           # FastAPI entry point
-│   ├── chatbot.py        # LangChain chatbot logic
-│   ├── routes/
-│   └── models/
-├── data/                 # FAQs, course info (for RAG)
+│
+├── .env
+├── config.py
+├── main.py
 ├── requirements.txt
-└── README.md             # Setup instructions for your module
+├── README.md
+│
+├── data/
+│   ├── BAUST_CSE.pdf
+│   └── CSE-OBE-Syllabus.pdf
+│
+├── data_Load/
+│   └── pdf_loader.py
+│
+├── embeddings/
+│   └── embedding_model.py
+│
+├── fetchers/
+│   └── api_fetcher.py
+│
+├── processors/
+│   └── json_to_docs.py
+│
+├── rag/
+│   ├── chunking.py
+│   ├── generator.py
+│   ├── pipeline.py
+│   ├── prompt.py
+│   └── retriever.py
+│
+├── scripts/
+│   └── ingest_data.py
+│
+├── vectorstore/
+│   └── chroma_store.py
+│
+├── chroma_db/
+│
+└── __pycache__/
 ```
 
-#### Example Chatbot Queries to Handle
+---
 
-- _"When is the software engineering assignment due?"_
-- _"Who teaches DBMS?"_
-- _"What events are upcoming this week?"_
-- _"What is the contact email for the CS department?"_
+# ⚙️ Installation
 
-#### Deliverables
+```bash
+pip install -r requirements.txt
+python -m scripts.ingest_data
+uvicorn main:app --reload
+# or
+python main.py
+```
 
-- Working `/api/chatbot` POST endpoint
-- Handles at least 10 FAQ categories
-- Integrated with the backend API
+---
 
-#### Branch Naming
+# 🌐 API Endpoints
+
+## GET /
+
+Returns API status.
+
+Example:
+
+```json
+{
+  "message": "Smart Campus RAG API Running"
+}
+```
+
+## POST /chat
+
+Request:
+
+```json
+{
+  "question": "Who teaches DBMS?"
+}
+```
+
+Response:
+
+```json
+{
+  "question": "Who teaches DBMS?",
+  "answer": "Generated AI response",
+  "retrieved_context": [
+    "...relevant document chunks..."
+  ]
+}
+```
+
+---
+
+# 💬 Example Questions
+
+- When is the Software Engineering assignment due?
+- Who teaches DBMS?
+- What events are upcoming this week?
+- What is the contact email for the CSE department?
+- What courses are offered this semester?
+
+---
+
+# ✅ Deliverables
+
+- Working **POST /chat** chatbot endpoint
+- Handles **10+ FAQ categories**
+- Integrated with the backend AI pipeline
+- RAG-based document retrieval
+- Clean and maintainable code structure
+- ChromaDB vector storage integration
+- API tested using **Postman**
+- Comprehensive setup and usage documentation
+
+---
+
+# 🌿 Branch Naming
 
 ```bash
 git checkout -b ai-engineer/chatbot-core
 git checkout -b ai-engineer/rag-integration
 ```
-
----
