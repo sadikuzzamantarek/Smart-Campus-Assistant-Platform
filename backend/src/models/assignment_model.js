@@ -8,7 +8,7 @@ const AssignmentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  coursre_code: {
+  course_code: {
     type: String,
     required: true,
     // ref:"" use ref from the course collection

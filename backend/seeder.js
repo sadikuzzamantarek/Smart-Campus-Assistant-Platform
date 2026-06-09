@@ -123,7 +123,7 @@ const generateAssignments = (count = 50) => {
     const assignment = {
       assignment_title: `${randomItem(ASSIGNMENT_TITLES)} - ${randomItem(COURSES).code}`,
       assignment_no: randomAssignmentNo(),
-      coursre_code: course.code, // Note: There's a typo in your schema (coursre_code instead of course_code)
+      course_code: course.code, // Note: There's a typo in your schema (course_code instead of course_code)
       course_title: course.title,
       description: `${randomItem(DESCRIPTIONS)}. ${Math.random() > 0.5 ? "Additional requirements: " + randomItem(DESCRIPTIONS).toLowerCase() + "." : ""}`,
       assigned_date: assignedDate,
@@ -169,7 +169,7 @@ const seedDatabase = async () => {
     result.slice(0, 5).forEach((assignment, index) => {
       console.log(`\n${index + 1}. ${assignment.assignment_title}`);
       console.log(
-        `   Course: ${assignment.coursre_code} - ${assignment.course_title}`,
+        `   Course: ${assignment.course_code} - ${assignment.course_title}`,
       );
       console.log(`   Deadline: ${assignment.deadline_date.toDateString()}`);
       console.log(`   Status: ${assignment.status}`);
