@@ -17,5 +17,13 @@ asignment_router.delete(
   "/get-single-assignment/:id",
   assignment_controller.delete_assignment,
 );
+asignment_router.post(
+  "/create-assignment",
+  assignment_controller.create_assignment,
+);
+asignment_router.put(
+  "/update-assignment/:id",
+  assignment_controller.update_assignment,
+);
 
 export default asignment_router;

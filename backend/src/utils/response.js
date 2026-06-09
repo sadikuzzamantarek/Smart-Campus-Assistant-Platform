@@ -1,8 +1,9 @@
-export function responseReturn(res, data, status_code, message) {
+export function responseReturn(res, status_code, message, data) {
   const constructedResponse = {
     code: status_code,
     message: message,
     data: data ?? null,
   };
-  res.json(constructedResponse);
+
+  res.status(status_code).json(constructedResponse);
 }
