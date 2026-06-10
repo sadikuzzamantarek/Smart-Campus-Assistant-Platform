@@ -155,6 +155,7 @@ export default class AssignmentController {
       const existingAssignmentCheck = await assignment_model.findOne({
         course_code,
         assignment_no,
+        _id: { $ne: id },
       });
       if (existingAssignmentCheck) {
         return responseReturn(
