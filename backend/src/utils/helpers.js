@@ -8,3 +8,10 @@ export const generateRandomId = (length = 8) => {
     .toString(36)
     .substring(2, 2 + length);
 };
+
+export const updateEventStatus = (event) => {
+  const now = new Date();
+  if (now < event.registrationDeadline) return "upcoming";
+  if (now >= event.eventDate && now <= event.eventEndDate) return "running";
+  return "closed";
+};

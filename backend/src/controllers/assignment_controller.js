@@ -9,6 +9,7 @@ export default class AssignmentController {
       if (assignments != null)
         return responseReturn(
           res,
+          true,
           assignments.length <= 0 ? 204 : 200,
           assignments.length <= 0
             ? "No Assignment Yet"
@@ -17,7 +18,12 @@ export default class AssignmentController {
         );
       throw new Error("There was a problem with getting all assignments");
     } catch (error) {
-      return responseReturn(res, 500, error.message || "Internal Server Error");
+      return responseReturn(
+        res,
+        false,
+        500,
+        error.message || "Internal Server Error",
+      );
       console.log(error);
     }
   };
@@ -29,17 +35,23 @@ export default class AssignmentController {
       const assignment = await assignment_model.findById(id);
 
       if (!assignment) {
-        return responseReturn(res, 404, "Assignment not found");
+        return responseReturn(res, false, 404, "Assignment not found");
       }
 
       return responseReturn(
         res,
+        true,
         200,
         "Assignment fetched successfully",
         assignment,
       );
     } catch (error) {
-      return responseReturn(res, 500, error.message || "Internal Server Error");
+      return responseReturn(
+        res,
+        false,
+        500,
+        error.message || "Internal Server Error",
+      );
     }
   };
   // Delete an assignment
@@ -49,14 +61,14 @@ export default class AssignmentController {
       const deletedAssignment = await assignment_model.findByIdAndDelete(id);
 
       if (!deletedAssignment) {
-        return responseReturn(res, 404, "Assignment not found");
+        return responseReturn(res, false, 404, "Assignment not found");
       }
 
-      return responseReturn(res, 200, "Assignment deleted successfully");
+      return responseReturn(res, true, 200, "Assignment deleted successfully");
     } catch (error) {
       return responseReturn(
         res,
-        null,
+        false,
         500,
         error.message || "Internal Server Error",
       );
@@ -87,7 +99,7 @@ export default class AssignmentController {
         !deadline_date ||
         !level_term
       ) {
-        return responseReturn(res, 400, "Missing required fields");
+        return responseReturn(res, false, 400, "Missing required fields");
       }
       const existingAssignmentCheck = await assignment_model.findOne({
         course_code,
@@ -96,6 +108,7 @@ export default class AssignmentController {
       if (existingAssignmentCheck) {
         return responseReturn(
           res,
+          false,
           403,
           "Assignment already existed with the same number. Same course can not have multiple same assignment numbers.",
         );
@@ -113,12 +126,18 @@ export default class AssignmentController {
 
       return responseReturn(
         res,
+        true,
         201,
         "Assignment created successfully",
         newAssignment,
       );
     } catch (error) {
-      return responseReturn(res, 500, error.message || "Internal Server Error");
+      return responseReturn(
+        res,
+        false,
+        500,
+        error.message || "Internal Server Error",
+      );
     }
   };
   // Update an assignment
@@ -140,6 +159,7 @@ export default class AssignmentController {
       if (existingAssignmentCheck) {
         return responseReturn(
           res,
+          false,
           403,
           "Assignment already existed with the same number. Same course can not have multiple same assignment numbers.",
         );
@@ -152,17 +172,23 @@ export default class AssignmentController {
       );
 
       if (!updatedAssignment) {
-        return responseReturn(res, null, 404, "Assignment not found");
+        return responseReturn(res, false, 404, "Assignment not found");
       }
 
       return responseReturn(
         res,
+        true,
         200,
         "Assignment updated successfully",
         updatedAssignment,
       );
     } catch (error) {
-      return responseReturn(res, 500, error.message || "Internal Server Error");
+      return responseReturn(
+        res,
+        false,
+        500,
+        error.message || "Internal Server Error",
+      );
     }
   };
 }

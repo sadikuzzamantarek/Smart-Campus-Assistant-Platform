@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 // Load environment variables
 dotenv.config();
-import Assignment from "./src/models/assignment_model.js";
+import Assignment from "../src/models/assignment_model.js";
 
 // Sample data for randomization
 const COURSES = [
