@@ -5,7 +5,9 @@ export default class AssignmentController {
   //getting all the assignment
   get_all_assignments = async (req, res) => {
     try {
-      const assignments = await assignment_model.find();
+      const assignments = await assignment_model
+        .find()
+        .sort({ assigned_date: -1 });
       if (assignments)
         return responseReturn(
           res,
