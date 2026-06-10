@@ -252,4 +252,35 @@ export default class EventController {
       );
     }
   };
+
+  deleteEvent = async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return responseReturn(res, false, 400, "Invalid event ID format");
+      }
+
+      const deletedEvent = await Event.findByIdAndDelete(id);
+      if (!deletedEvent) {
+        return responseReturn(res, false, 404, "Event not found");
+      }
+
+      return responseReturn(
+        res,
+        true,
+        200,
+        "Event deleted successfully",
+        deletedEvent,
+      );
+    } catch (error) {
+      console.error(error);
+      return responseReturn(
+        res,
+        false,
+        500,
+        "Server error while deleting event",
+        error.message,
+      );
+    }
+  };
 }
