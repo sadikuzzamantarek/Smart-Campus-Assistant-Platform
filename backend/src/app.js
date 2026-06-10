@@ -1,9 +1,9 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import checkingRouter from "./routes/checking.js";
 import connectDB from "./config/db.js";
 import asignment_router from "./routes/assignments.js";
+import checkingRouter from "./routes/checking.js";
 import eventRouter from "./routes/eventRoute.js";
 dotenv.config();
 
@@ -11,15 +11,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-connectDB()
+connectDB();
 
 //routes
 app.use("/api", checkingRouter); //this is for checking only
-app.use("/api", asignment_router); 
-app.use("/api", eventRouter); 
-
-
-app.get("/", (req, res) => {
+app.use("/api", asignment_router);
+app.use("/api", eventRouter);
+app.use("/", (req, res) => {
   res.send("Server running");
 });
 
