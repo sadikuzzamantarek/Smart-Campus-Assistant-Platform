@@ -116,7 +116,7 @@ export default class EventController {
         res,
         true,
         200,
-        "Events retrieved successfully",
+        events.length<=0 ? "No Events Yet":"Events retrieved successfully",
         events,
       );
     } catch (error) {

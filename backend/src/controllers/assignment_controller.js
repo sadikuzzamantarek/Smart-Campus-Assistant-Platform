@@ -6,11 +6,11 @@ export default class AssignmentController {
   get_all_assignments = async (req, res) => {
     try {
       const assignments = await assignment_model.find();
-      if (assignments != null)
+      if (assignments)
         return responseReturn(
           res,
           true,
-          assignments.length <= 0 ? 204 : 200,
+          200,
           assignments.length <= 0
             ? "No Assignment Yet"
             : "Assignments fetched successfully",
