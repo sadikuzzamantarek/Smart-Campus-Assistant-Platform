@@ -120,7 +120,7 @@ export default class EventController {
         events,
       );
     } catch (error) {
-      console.error(error);
+      console.error("getting all event error: " + error);
       return responseReturn(
         res,
         false,
@@ -159,12 +159,95 @@ export default class EventController {
         event,
       );
     } catch (error) {
-      console.error(error);
+      console.error("getting single event error: " + error);
       return responseReturn(
         res,
         false,
         500,
         "Server error while fetching event",
+        error.message,
+      );
+    }
+  };
+
+  //update event details
+  updateEvent = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return responseReturn(res, false, 400, "Invalid event ID format");
+      }
+
+      delete updates._id;
+      delete updates.createdAt;
+      delete updates.__v;
+
+      const existingEvent = await Event.findById(id);
+      if (!existingEvent) {
+        return responseReturn(res, false, 404, "Event not found");
+      }
+
+      // Prepare updated dates
+      let eventDate = updates.eventDate
+        ? new Date(updates.eventDate)
+        : existingEvent.eventDate;
+      let regDeadline = updates.registrationDeadline
+        ? new Date(updates.registrationDeadline)
+        : existingEvent.registrationDeadline;
+      let eventEndDate = updates.eventEndDate
+        ? new Date(updates.eventEndDate)
+        : existingEvent.eventEndDate;
+
+      if (regDeadline > eventDate) {
+        return responseReturn(
+          res,
+          false,
+          400,
+          "Registration deadline must be on or before event start date",
+        );
+      }
+      if (eventDate > eventEndDate) {
+        return responseReturn(
+          res,
+          false,
+          400,
+          "Event start date must be on or before event end date",
+        );
+      }
+
+      // Auto‑status if not manually set
+      if (!updates.status) {
+        const now = new Date();
+        if (now < regDeadline) updates.status = "upcoming";
+        else if (now >= eventDate && now <= eventEndDate)
+          updates.status = "running";
+        else updates.status = "closed";
+      }
+
+      updates.modifiedAt = new Date();
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+        id,
+        { $set: updates },
+        { new: true, runValidators: true },
+      );
+
+      return responseReturn(
+        res,
+        true,
+        200,
+        "Event updated successfully",
+        updatedEvent,
+      );
+    } catch (error) {
+      console.error("event update error: " + error);
+      return responseReturn(
+        res,
+        false,
+        500,
+        "Server error while updating event",
         error.message,
       );
     }
