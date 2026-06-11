@@ -7,7 +7,7 @@ const eventController = new EventController();
 eventRouter.get(
   "/get-all-events",
   loggerMiddleware,
-
+  protect,
   eventController.getAllEvents,
 );
 eventRouter.post(
@@ -19,6 +19,7 @@ eventRouter.post(
 eventRouter.get(
   "/get-single-event/:id",
   loggerMiddleware,
+  protect,
   eventController.getEventById,
 );
 eventRouter.put(

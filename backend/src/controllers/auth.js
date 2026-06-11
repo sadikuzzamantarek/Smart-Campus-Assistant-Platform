@@ -127,21 +127,26 @@ export default class AuthController {
 
   login = async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { studentId, password } = req.body;
 
-      if (!email || !password) {
+      if (!studentId || !password) {
         return responseReturn(
           res,
           false,
           400,
-          "Email and password are required",
+          "Student ID and password are required",
         );
       }
 
       // Find user by email
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ studentId });
       if (!user) {
-        return responseReturn(res, false, 401, "Invalid email or password");
+        return responseReturn(
+          res,
+          false,
+          401,
+          "Invalid student id or password",
+        );
       }
 
       // Check if account is active
@@ -157,7 +162,12 @@ export default class AuthController {
       // Verify password
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return responseReturn(res, false, 401, "Invalid email or password");
+        return responseReturn(
+          res,
+          false,
+          401,
+          "Invalid student id or password",
+        );
       }
 
       // Update last login time
