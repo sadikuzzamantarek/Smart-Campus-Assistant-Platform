@@ -6,4 +6,8 @@ export default class CheckController {
     console.log("Controller Checked");
     return this.service.checkService();
   };
+  checkAuth = async (req, res) => {
+    console.log(req.user);
+    res.send("Check The Console for decoded info")
+  };
 }
